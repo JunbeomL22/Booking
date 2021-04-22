@@ -4,13 +4,14 @@ import date_utils
 import utils
 import payoff
 
-def set_struct_cashflow():
+def set_struct_cashflow(sheet_name = "StructProduct", base_range = "StructBaseInfo",
+                        underlying_range = "StructUnderlying"):
     wb = xw.Book.caller()
-    sheet = wb.sheets["StructProduct"]
+    sheet = wb.sheets[sheet_name]
     rg = sheet.range
-    base_info = rg("StructBaseInfo").value
+    base_info = rg(base_range).value
     base_dict = utils.conversion(base_info)
-    under_info = rg("StructUnderlying").value
+    under_info = rg(underlying_range).value
     under_dict = utils.conversion(base_info)
     
     rg("G4:V200").value = None
