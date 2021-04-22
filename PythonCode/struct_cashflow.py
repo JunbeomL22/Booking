@@ -13,7 +13,7 @@ def set_struct_cashflow():
     under_info = rg("StructUnderlying").value
     under_dict = utils.conversion(base_info)
     
-    rg("G4:U200").value = None
+    rg("G4:V200").value = None
     rg("W4:X200").value = None
     rg("Z4:AA200").value = None
     # cash_flow period
@@ -32,14 +32,17 @@ def set_struct_cashflow():
     cal = base_dict['Calendar1']
     ql_rule = date_utils.date_rule_dict[coup_rule]
     ql_cal = date_utils.cal_dict[cal]
-    
+
+    day_count = base_dict['Day_Count']
     perf_type = base_dict['Type']
     coup = base_dict['Coupon']
     floor = base_dict['Floor']
     cap = base_dict['Cap']
     lev = base_dict['Leverage']
     
-    cash_flow = payoff.payoff_factory[base_dict['Prod_Type']](coup, cap, floor, lev, perf_type)
+    underlying_num = int(base_dict['Underlying'])
+    
+    cash_flow = payoff.payoff_factory[base_dict['Prod_Type']](day_count, coup, cap, floor, lev, perf_type)
 
     schedule = date_utils.coupon_generation(ql.Date.from_date(issue),
                                             ql.Date.from_date(mat),
@@ -78,8 +81,8 @@ def set_struct_cashflow():
 
     
 
-#xw.Book("BookFile.xlsm").set_mock_caller()
-#set_struct_cashflow()
+xw.Book("BookFile.xlsm").set_mock_caller()
+set_struct_cashflow()
                                 
 if __name__ == "__main__":
     xw.Book("BookFile.xlsm").set_mock_caller()

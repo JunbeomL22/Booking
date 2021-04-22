@@ -28,7 +28,7 @@ def coupon_generation(effect, term, freq, rule, fixing_days, payment_days,
     
     for i in range(coupon_length):
         fixing_date  = cal.advance(schedule[i], ql.Period(-fixing_days, ql.Days), fixing_conv) 
-        payment_date = cal.advance(schedule[i], ql.Period(payment_days, ql.Days), payment_conv) 
+        payment_date = cal.advance(schedule[i+1], ql.Period(payment_days, ql.Days), payment_conv) 
         coupon_date = list(map(ql.Date.to_date, (fixing_date, schedule[i], schedule[i+1], payment_date)))
         ret = ret + [coupon_date]
 
