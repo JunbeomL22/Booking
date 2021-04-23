@@ -308,8 +308,11 @@ def conversion(lst):
     res_dct = {item[0]: item[1] for item in lst}
     return res_dct
 
-
-
+def json_from_db(query, conn, one=False):
+    rows = conn.execute(query)
+    cur = rows.cursor
+    df = pd.read_sql_query(query, conn)
+    return df.to_json()
 
 
 
